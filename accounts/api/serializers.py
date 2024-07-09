@@ -1,9 +1,9 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer,TokenRefreshSerializer
-
-
 from rest_framework import serializers
 from accounts.models import User,UserProfile
 from rest_framework_simplejwt.tokens import RefreshToken, Token,AccessToken
+from django.contrib.auth.validators import UnicodeUsernameValidator
+from django.core.exceptions import ValidationError as DjangoValidationError
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -30,25 +30,34 @@ class UserDetailsUpdateSerializer(serializers.ModelSerializer):
     
 
 class UserRegisterSerializer(serializers.ModelSerializer):
+    # Add email and password validators
+    email = serializers.EmailField()
+    password = serializers.CharField(min_length=8)
+
     class Meta:
         model = User
-        fields = ['id','first_name','phone_number','email','password']
+        fields = ['id', 'first_name', 'phone_number', 'email', 'password']
         extra_kwargs = {
-            'password':{ 'write_only':True}
+            'password': {'write_only': True}
         }
         
-    
-    def create(self,validated_data):
-        password = validated_data.pop('password',None)
+    def validate_email(self, value):
+        # Check if email is already in use
+        if User.objects.filter(email=value).exists():
+            raise serializers.ValidationError("This email is already in use.")
+        return value
+
+    def create(self, validated_data):
+        password = validated_data.pop('password', None)
         instance = self.Meta.model(**validated_data)
         if password is not None:
             instance.set_password(password)
             instance.save()
             return instance
         else:
-            raise serializers.ValidationError({"password": "password is not valid"})
+            raise serializers.ValidationError({"password": "Password is not valid."})
        
-###################### ADMIN SIDE ####################
+#Admin#
 
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
@@ -71,12 +80,7 @@ class AdminUserSerializer(serializers.ModelSerializer):
             
         }
     
-   
-    
-    
     def create(self, validated_data):
-       
- 
         profile_data = validated_data.pop('User_Profile')
         password = validated_data.pop('password',None)
         print("-=-=-=-=-=")
@@ -96,13 +100,9 @@ class UserUpdateSerializer(serializers.ModelSerializer):
         fields = ['first_name', 'phone_number', 'email', 'is_active']
 
     def update(self, instance, validated_data):
-        # Update user fields
         instance.first_name = validated_data.get('first_name', instance.first_name)
-    
         instance.phone_number = validated_data.get('phone_number', instance.phone_number)
         instance.email = validated_data.get('email', instance.email)
-        
-        
         instance.is_active = validated_data.get('is_active', instance.is_active)
         instance.save()
         return instance

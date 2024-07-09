@@ -12,7 +12,8 @@ export const userBasicDetailsSlice = createSlice(
       set_user_basic_details: (state, action) => {
         state.name = action.payload.name;
         state.profile_pic = action.payload.profile_pic;
-      }
+      },
+    
     }
 
 

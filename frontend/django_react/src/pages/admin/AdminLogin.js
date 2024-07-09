@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { set_Authentication } from '../../Redux/authentication/authenticationSlice';
+import imgadmin from './imgadmin.jpg'
 
 
 
@@ -17,45 +18,41 @@ function AdminLogin() {
   const dispatch = useDispatch();
 
 
-  const handleLoginSubmit = async(event)=> {
+  const handleLoginSubmit = async(event) => {
     event.preventDefault();
-    setFormError([])
+    setFormError([]);
     const formData = new FormData();
     formData.append("email", event.target.email.value);
     formData.append("password", event.target.password.value);
     try {
-      const res = await axios.post(baseURL+'/api/accounts/login/', formData)
-      if(res.status === 200){
-        localStorage.setItem('access', res.data.access)
-        localStorage.setItem('refresh', res.data.refresh)
+      const res = await axios.post(baseURL + '/api/accounts/login/', formData);
+      // Check if res is defined before accessing its properties
+      if (res && res.status === 200) {
+        localStorage.setItem('access', res.data.access);
+        localStorage.setItem('refresh', res.data.refresh);
         dispatch(
           set_Authentication({
             name: jwt_decode(res.data.access).first_name,
             isAuthenticated: true,
-            isAdmin:res.data.isAdmin,
+            isAdmin: res.data.isAdmin,
           })
         );
-        navigate('/admincontrol')
-        return res
-      }  
-      
-    }
-    catch (error) {
+        navigate('/admincontrol');
+        return res;
+      }
+    } catch (error) {
       console.log(error);
-      if (error.response.status===401)
-      {
-       
-        setFormError(error.response.data)
-      }
-      else
-      {
-        console.log(error);
-  
+      // Log the error response to understand what went wrong
+      if (error.response) {
+        console.error(error.response);
+        if (error.response.status === 401) {
+          setFormError(error.response.data);
+        }
+      } else {
+        console.error("An unexpected error occurred:", error.message);
       }
     }
-  }
-
-
+  };
 
 
 
@@ -67,7 +64,7 @@ function AdminLogin() {
         
         
   
-          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+          <img src={imgadmin}
             className="img-fluid" alt="Phone "/>
         </div>
         <div className="col-md-7 col-lg-5 col-xl-5 offset-xl-1">

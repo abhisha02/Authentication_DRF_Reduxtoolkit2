@@ -1,8 +1,8 @@
 
 import React, { useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route ,useLocation} from 'react-router-dom';
 import AdminHeader from '../AdminHeader/AdminHeader';
-import AdminFooter from '../AdminFooter/AdminFooter';
+
 import AdminHome from '../../../pages/admin/AdminHome';
 import AdminLogin from '../../../pages/admin/AdminLogin';
 import AdminPrivateRoute from '../../AdminPrivateRoute';
@@ -14,9 +14,11 @@ import isAuthAdmin from '../../../utils/isAuthAdmin';
 import AdminCreateUser from '../../../pages/admin/AdminCreateUser';
 import AdminUpdateUser from '../../../pages/admin/AdminUpdateUser';
 
+
 function AdminWrapper() {
   const dispatch = useDispatch();
   const authentication_user = useSelector(state => state.authentication_user);
+  const location = useLocation(); 
 
   const baseURL = 'http://127.0.0.1:8000';
   const token = localStorage.getItem('access');
@@ -61,14 +63,15 @@ function AdminWrapper() {
 
   return (
     <>
-      <AdminHeader />
+ 
+      
       <Routes>
         <Route path="login" element={<AdminLogin />} />
         <Route path="/" element={<AdminPrivateRoute><AdminHome /></AdminPrivateRoute>} />
         <Route path="/user/create" element={<AdminPrivateRoute><AdminCreateUser /></AdminPrivateRoute>} />
         <Route path="/user/update/:id" element={<AdminPrivateRoute><AdminUpdateUser /></AdminPrivateRoute>} />
       </Routes>
-      <AdminFooter />
+  
     </>
   );
 }

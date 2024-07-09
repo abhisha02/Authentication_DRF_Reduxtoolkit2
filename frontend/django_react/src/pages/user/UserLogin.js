@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useDispatch } from 'react-redux';
 import { set_Authentication } from '../../Redux/authentication/authenticationSlice';
 import jwt_decode from "jwt-decode";
+import imglogin from './imglogin.jpg'
 
 
 function UserLogin() {
@@ -75,7 +76,7 @@ function UserLogin() {
       </div>}
       
 
-        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
+        <img src={imglogin}
           className="img-fluid" alt="Phone "/>
       </div>
       <div className="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
@@ -94,11 +95,12 @@ function UserLogin() {
 
           <div className="d-flex justify-content-around align-items-center mb-4">
            
-            <Link to='/register'>Not Have Account?</Link>
+            
           </div>
 
           {/* <!-- Submit button --> */}
           <button type="submit" className="btn btn-primary btn-lg btn-block">Sign in</button>
+          <Link to='/register'>Register</Link>
 
           <ul className='text-danger'>
              {formError['detail'] && <li>

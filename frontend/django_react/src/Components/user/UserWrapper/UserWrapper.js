@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route,useLocation } from "react-router-dom";
 import UserHeader from "../UserHeader/UserHeader";
-import UserFooter from "../UserFooter/UserFooter";
 import UserHome from "../../../pages/user/UserHome";
 import UserProfile from "../../../pages/user/UserProfile";
 import UserRegister from "../../../pages/user/UserRegister";
@@ -12,12 +11,15 @@ import { useDispatch,useSelector } from 'react-redux';
 import { set_Authentication } from "../../../Redux/authentication/authenticationSlice"; 
 import { set_user_basic_details } from "../../../Redux/userBasicDetails/userBasicDetailsSlice"; 
 import axios from 'axios'
+import UserEdit from "../../../pages/user/useredit";
+
 
 
 function UserWrapper() {
   const dispatch = useDispatch();
 
   const authentication_user = useSelector(state => state.authentication_user)
+  const location = useLocation(); 
   
 
   const checkAuth = async () => {
@@ -80,12 +82,15 @@ function UserWrapper() {
   return (
     <>
    
-    <UserHeader/>
+   {(location.pathname!== "/register" && location.pathname!== "/login") && <UserHeader />}
       <Routes>
           <Route  path="/" element={<UserHome/>}></Route>
 
           <Route  path="login" element={<UserLogin/>}></Route>
           <Route  path="register" element={<UserRegister/>}></Route>
+          <Route  path="/edit" element={<UserEdit/>}></Route>
+   
+
 
           <Route  path="profile" element={
             <PrivateRoute>
@@ -96,7 +101,7 @@ function UserWrapper() {
           </Route>
 
         </Routes>    
-      <UserFooter/>
+     
     
     </>
   );

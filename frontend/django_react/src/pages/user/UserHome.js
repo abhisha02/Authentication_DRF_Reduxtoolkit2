@@ -1,50 +1,33 @@
-import React from 'react'
+import React from 'react';
+import { useSelector,useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import imghome2 from './imghome2.png';
+import { set_name } from '../../Redux/authentication/authenticationSlice';
 
-import { useSelector } from 'react-redux'
-import { Link ,useNavigate} from 'react-router-dom'
 
 
 
 function UserHome() {
+  const navigate = useNavigate();
+  const authentication_user = useSelector(state => state.authentication_user);
+ 
+  const dispatch=useDispatch()
 
-  const navigate = useNavigate()
-  const authentication_user = useSelector(state => state.authentication_user)
  
   return (
-    // <div className="card">
-    //   <div className="card-body">
-    //     <h4>
-    //       {authentication_user.isAuthenticated?<>Welcome Back {authentication_user.name} ! </>:<>Login to edit profile</>}
-    //     </h4>
-    //   </div>
-    // </div>
-<div className="row my-4 mx-4">
-  <div className="col-md-6 mb-4">
-    <div className="bg-image hover-overlay ripple shadow-2-strong rounded-5" data-mdb-ripple-color="light">
-      <img src="https://mdbcdn.b-cdn.net/img/new/slides/080.webp" className="img-fluid" />
-      <a href="#!">
-        <div className="mask" style={{backgroundColor: 'rgba(251, 251, 251, 0.15)'}}></div>
-      </a>
-    </div>
-  </div>
-
-  <div className="col-md-6 mb-4">
-    <span className="badge bg-danger px-2 py-1 shadow-1-strong mb-3">{authentication_user.isAuthenticated?<>Welcome Back {authentication_user.name} ! </>:<>Hello Guest User</>}</span>
-    <h4><strong>Home Page </strong></h4>
-    <p className="text-muted">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis consequatur
-      eligendi quisquam doloremque vero ex debitis veritatis placeat unde animi laborum
-      sapiente illo possimus, commodi dignissimos obcaecati illum maiores corporis.
-    </p>
-    {authentication_user.isAuthenticated?<>
-      <Link type="button" className="btn btn-primary" to='/profile'>Go To Profile  ! </Link></>
-      :<><Link type="button" className="btn btn-primary" to='/login'> Login To Read More </Link></>}
-    
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '100vh', // Adjust this value as needed
+      width: '100vw', // Adjust this value as needed
+    }}>
+      <img src={imghome2} alt="Registration Image" className="img-fluid" />
    
-  </div>
-</div>
-
-  )
+     
+   
+    </div>
+  );
 }
 
-export default UserHome
+export default UserHome;

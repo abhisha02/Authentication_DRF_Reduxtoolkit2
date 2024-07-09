@@ -42,12 +42,15 @@ function UserHeader() {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           {/* <!-- Navbar brand --> */}
           <Link className="navbar-brand mt-2 mt-lg-0" to='/'>
-            LOGO
+            Home
           </Link>
         {/* //  <!-- Left links --> */}
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-            {authentication_user.isAuthenticated?<Link className="nav-link" to='/profile'>{authentication_user.name}</Link>: <Link className="nav-link" to='/login'>Login</Link>}
+            {authentication_user.isAuthenticated?<Link className="nav-link" to='/profile'>{""}</Link>:
+             <Link className="nav-link" to='/login'>Login</Link>}
+             
+             
               
         
             </li>
@@ -85,6 +88,9 @@ function UserHeader() {
             >
               <li>
                 <Link className="dropdown-item" to='/profile'>My profile</Link>
+              </li>
+              <li>
+                <Link className="dropdown-item" to='/edit'>Edit</Link>
               </li>
              
               <li>

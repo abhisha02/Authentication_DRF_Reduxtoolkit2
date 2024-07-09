@@ -71,7 +71,7 @@ const handleSubmit = event => {
 
 
   return (
-     <section  style={{backgroundColor: "#508bfc"}}>
+     <section  >
     <div className="container py-5 ">
       <div className="row d-flex justify-content-center align-items-center ">
         <div className="col-12 col-md-8 col-lg-6 col-xl-5">
@@ -82,27 +82,32 @@ const handleSubmit = event => {
               <form onSubmit={handleSubmit} method='POST'>
 
               <div className=" mb-4">
+              <label className="form-label" >Name</label>
                 <input type="text" name='first_name' className="form-control form-control-lg" required  onChange={handleInputChange}/>
-                <label className="form-label" >Name</label>
+                
               </div>
               <div className=" mb-4">
+              <label className="form-label" htmlFor="typeEmailX-2">Email</label>
                 <input type="email" id="typeEmailX-2" name='email' className="form-control form-control-lg"  required onChange={handleInputChange}/>
-                <label className="form-label" htmlFor="typeEmailX-2">Email</label>
+              
               </div>
 
               <div className=" mb-4">
+              <label className="form-label" >Mobile Number</label>
                 <input type="text"  className="form-control form-control-lg"  name='phone_number' required onChange={handleInputChange}/>
-                <label className="form-label" >Mobile Number</label>
+                
               </div>
   
               <div className=" mb-4">
+              <label className="form-label" htmlFor="typePasswordX-2">Password</label>
                 <input type="password" id="typePasswordX-2" className="form-control form-control-lg" name='password' required onChange={handleInputChange}/>
-                <label className="form-label" htmlFor="typePasswordX-2">Password</label>
+            
               </div>
 
               <div className=" mb-4">
+              <label className="form-label" htmlFor="typePasswordX-2">Profile Picture</label>
                 <input type="file"  className="form-control form-control-lg" name='profile_pic' required onChange={handleFileChange}/>
-                <label className="form-label" htmlFor="typePasswordX-2">Profile Picture</label>
+               
               </div>
   
   
